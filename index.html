@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AICTE | Complaint Monitoring Dashboard — Prototype</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">A</div>
+      <div><strong>AICTE</strong><small>Case Monitoring Portal</small></div>
+    </div>
+    <div class="workspace-label">WORKSPACE</div>
+    <nav id="main-nav">
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Overview</button>
+      <button class="nav-item" data-page="complaints"><span>▤</span> Complaints <b class="nav-count" id="nav-count">8</b></button>
+      <button class="nav-item" data-page="institutions"><span>⌂</span> Institutions</button>
+      <button class="nav-item" data-page="routing"><span>⌘</span> Routing & AI Review</button>
+      <button class="nav-item" data-page="analytics"><span>▥</span> Reports & Analytics</button>
+      <button class="nav-item" data-page="notifications"><span>♧</span> Notifications <i class="dot"></i></button>
+      <div class="workspace-label nav-spacer">ADMINISTRATION</div>
+      <button class="nav-item" data-page="users"><span>♙</span> Users & Roles</button>
+      <button class="nav-item" data-page="audit"><span>◷</span> Audit Logs</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="help-card"><div class="help-icon">?</div><strong>Need help?</strong><p>Review the prototype guide and workflow notes.</p><button id="help-btn">Open quick guide ↗</button></div>
+      <div class="user-mini"><div class="avatar">AD</div><div><strong>Portal Admin</strong><small>Super Administrator</small></div><span>⌄</span></div>
+    </div>
+  </aside>
+
+  <main class="main-area">
+    <header class="topbar">
+      <div class="topbar-left"><button class="mobile-menu" id="mobile-menu">☰</button><div class="breadcrumb">Workspace <span>/</span> <strong id="crumb">Overview</strong></div></div>
+      <div class="topbar-actions"><div class="environment"><span class="pulse"></span> DEMO ENVIRONMENT</div><button class="icon-btn" id="top-notifications" title="Notifications">♧<i></i></button><div class="avatar">AD</div></div>
+    </header>
+
+    <section class="page active" id="page-dashboard">
+      <div class="page-heading"><div><div class="eyebrow">MONITORING CENTER</div><h1>Good morning, Admin <span class="wave">✦</span></h1><p class="muted">Here’s the latest overview of institution-related complaint cases.</p></div><div class="heading-actions"><button class="btn btn-outline" id="export-dashboard">⇩ Export summary</button><button class="btn btn-primary" data-go="register">＋ Register complaint</button></div></div>
+      <div class="notice"><span class="notice-icon">i</span><div><strong>Prototype data only</strong><p>Sample records and routing suggestions are fictional. Verify official AICTE units and routing rules before production use.</p></div><button class="notice-close" aria-label="Dismiss">×</button></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top"><span>Total cases</span><span class="stat-icon blue">▤</span></div><strong id="stat-total">248</strong><div class="stat-foot"><span class="trend up">↗ 12.8%</span> <span>vs. previous month</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Needs attention</span><span class="stat-icon amber">◷</span></div><strong id="stat-pending">36</strong><div class="stat-foot"><span class="trend warn">● 9 overdue</span> <span>require follow-up</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>In progress</span><span class="stat-icon purple">↻</span></div><strong>74</strong><div class="stat-foot"><span class="trend neutral">→ 6 assigned today</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Resolved</span><span class="stat-icon green">✓</span></div><strong>138</strong><div class="stat-foot"><span class="trend up">↗ 8.4%</span> <span>resolution rate 55.6%</span></div></article>
+      </div>
+      <div class="dashboard-grid">
+        <article class="panel chart-panel"><div class="panel-head"><div><h2>Case volume & resolution</h2><p class="muted">Monthly case movement</p></div><select id="chart-period" class="select-small"><option>Last 6 months</option><option>Last 12 months</option></select></div><div class="chart-wrap"><canvas id="volumeChart" aria-label="Case volume chart"></canvas></div></article>
+        <article class="panel"><div class="panel-head"><div><h2>Cases by category</h2><p class="muted">Current open case mix</p></div><button class="text-btn" data-go="analytics">View report ↗</button></div><div class="category-list">
+          <div class="category-row"><span class="category-dot c-blue"></span><div class="category-info"><strong>Approval & affiliation</strong><small>Approval-related queries</small></div><b>28%</b></div>
+          <div class="category-row"><span class="category-dot c-purple"></span><div class="category-info"><strong>Student grievances</strong><small>Student-related concerns</small></div><b>24%</b></div>
+          <div class="category-row"><span class="category-dot c-amber"></span><div class="category-info"><strong>Fees & refunds</strong><small>Financial complaints</small></div><b>19%</b></div>
+          <div class="category-row"><span class="category-dot c-green"></span><div class="category-info"><strong>Compliance</strong><small>Regulatory compliance</small></div><b>17%</b></div>
+          <div class="category-row"><span class="category-dot c-gray"></span><div class="category-info"><strong>Other / review needed</strong><small>Manual triage required</small></div><b>12%</b></div>
+        </div></article>
+      </div>
+      <article class="panel table-panel"><div class="panel-head"><div><h2>Recently updated cases</h2><p class="muted">Latest changes across the portal</p></div><button class="text-btn" data-go="complaints">View all cases →</button></div><div class="table-scroll"><table><thead><tr><th>CASE ID</th><th>SUBJECT</th><th>INSTITUTION</th><th>STATUS</th><th>PRIORITY</th><th>UPDATED</th></tr></thead><tbody id="recent-table"></tbody></table></div></article>
+    </section>
+
+    <section class="page" id="page-complaints">
+      <div class="page-heading"><div><div class="eyebrow">CASE MANAGEMENT</div><h1>Complaints</h1><p class="muted">Register, review, assign and track institution-related cases.</p></div><div class="heading-actions"><button class="btn btn-outline" id="export-cases">⇩ Export CSV</button><button class="btn btn-primary" data-go="register">＋ Register complaint</button></div></div>
+      <div class="filterbar"><div class="searchbox">⌕ <input id="case-search" placeholder="Search case ID, subject, institution…"></div><select id="status-filter"><option value="">All statuses</option><option>New</option><option>Under Review</option><option>In Progress</option><option>Resolved</option><option>Escalated</option></select><select id="priority-filter"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select><button class="btn btn-outline" id="clear-filters">Clear filters</button></div>
+      <div class="panel table-panel"><div class="table-meta"><span id="case-result-count">8 cases</span><span class="muted">Demo records · newest first</span></div><div class="table-scroll"><table><thead><tr><th>CASE ID</th><th>SUBJECT</th><th>INSTITUTION</th><th>CATEGORY</th><th>STATUS</th><th>PRIORITY</th><th>ASSIGNED TO</th><th></th></tr></thead><tbody id="cases-table"></tbody></table></div><div class="table-bottom"><span>Showing demo records</span><div><button class="pagination active">1</button><button class="pagination" disabled>2</button><button class="pagination" disabled>→</button></div></div></div>
+    </section>
+
+    <section class="page" id="page-register">
+      <div class="page-heading"><div><div class="eyebrow">CASE INTAKE</div><h1>Register a complaint</h1><p class="muted">Capture the case details and review the suggested category before submission.</p></div><div class="heading-actions"><button class="btn btn-outline" data-go="complaints">← Back to complaints</button></div></div>
+      <div class="form-layout"><form class="panel form-panel" id="complaint-form"><div class="form-section-title"><span>01</span><div><h2>Complaint details</h2><p class="muted">Fields marked with * are required.</p></div></div>
+        <div class="form-grid"><label>Institution name *<input required id="institution-input" placeholder="Enter institution name"></label><label>Institution type<select id="institution-type"><option>Engineering College</option><option>University</option><option>Polytechnic</option><option>Other</option></select></label>
+          <label class="span-2">Complaint subject *<input required id="subject-input" placeholder="Briefly describe the issue"></label>
+          <label>Complaint category *<select id="category-input"><option value="">Select a category</option><option>Approval & affiliation</option><option>Student grievance</option><option>Fees & refunds</option><option>Compliance</option><option>Infrastructure</option><option>Other / manual review</option></select></label>
+          <label>Priority<select id="priority-input"><option>Medium</option><option>High</option><option>Low</option></select></label>
+          <label class="span-2">Complaint description *<textarea required id="description-input" rows="5" placeholder="Provide the relevant details, dates, and actions already taken…"></textarea><small class="field-hint">Avoid entering unnecessary personal or sensitive information in this demo.</small></label>
+          <label>Complainant role<select id="role-input"><option>Institution representative</option><option>Student</option><option>Faculty member</option><option>Public / other</option></select></label>
+          <label>Reference number (optional)<input id="reference-input" placeholder="e.g. REF-2026-001"></label>
+        </div>
+        <div class="form-section-title section-gap"><span>02</span><div><h2>Supporting documents</h2><p class="muted">Prototype only: file names are displayed; files are not uploaded.</p></div></div>
+        <label class="upload-box"><input type="file" id="attachment-input" multiple><span class="upload-icon">⇧</span><strong>Choose supporting files</strong><small>PDF, JPG, PNG or DOCX · demo only</small><span id="file-list" class="file-list"></span></label>
+        <div class="form-actions"><button type="button" class="btn btn-outline" data-go="complaints">Cancel</button><button type="submit" class="btn btn-primary">Review & register →</button></div>
+      </form>
+      <aside class="panel guidance-panel"><div class="guidance-icon">✦</div><h3>AI-assisted triage</h3><p class="muted">The production system could suggest a category from the complaint text. This prototype uses a transparent keyword demo only.</p><div class="ai-result" id="ai-result"><span class="ai-pill">READY TO REVIEW</span><p>Enter a subject and description to see a sample suggestion.</p></div><div class="divider"></div><h3>Before submitting</h3><ul class="check-list"><li>Confirm the institution name.</li><li>Choose the closest complaint category.</li><li>Include clear, factual details.</li><li>Routing must follow verified official rules.</li></ul></aside></div>
+    </section>
+
+    <section class="page" id="page-detail">
+      <div class="page-heading"><div><div class="eyebrow">CASE FILE <span id="detail-id-label"></span></div><h1 id="detail-title">Complaint details</h1><p class="muted" id="detail-subtitle"></p></div><div class="heading-actions"><button class="btn btn-outline" data-go="complaints">← Back to cases</button><button class="btn btn-primary" id="assign-btn">↗ Assign / reassign</button></div></div>
+      <div class="detail-grid"><div><article class="panel detail-main"><div class="detail-status-row" id="detail-status-row"></div><h2>Case overview</h2><p id="detail-description" class="detail-description"></p><div class="detail-fields" id="detail-fields"></div><div class="divider"></div><h2>Case activity</h2><div class="timeline" id="detail-timeline"></div></article></div><aside><article class="panel"><h2>Assignment</h2><div id="detail-assignment" class="assignment-box"></div><button class="btn btn-outline full-width" id="reassign-btn">Reassign case</button></article><article class="panel"><h2>Audit & safeguards</h2><p class="muted small">Every assignment and status change should be recorded with actor, timestamp, and reason.</p><div class="safeguard-line">✓ Role-based access</div><div class="safeguard-line">✓ Change history</div><div class="safeguard-line">✓ Secure attachments (production)</div></article></aside></div>
+    </section>
+
+    <section class="page" id="page-institutions">
+      <div class="page-heading"><div><div class="eyebrow">DIRECTORY</div><h1>Institutions</h1><p class="muted">A sample directory used to associate cases with institutions.</p></div><div class="heading-actions"><button class="btn btn-primary" id="add-institution">＋ Add institution</button></div></div>
+      <div class="stats-grid compact-stats"><article class="stat-card"><div class="stat-top"><span>Listed institutions</span><span class="stat-icon blue">⌂</span></div><strong id="institution-count">124</strong><div class="stat-foot">Demo directory count</div></article><article class="stat-card"><div class="stat-top"><span>With open cases</span><span class="stat-icon amber">◷</span></div><strong>42</strong><div class="stat-foot">Requires monitoring</div></article><article class="stat-card"><div class="stat-top"><span>Verified records</span><span class="stat-icon green">✓</span></div><strong>91%</strong><div class="stat-foot">Illustrative data</div></article></div>
+      <div class="panel table-panel"><div class="panel-head"><div><h2>Institution directory</h2><p class="muted">Sample records for demonstration</p></div><div class="searchbox narrow">⌕ <input id="institution-search" placeholder="Search institutions…"></div></div><div class="table-scroll"><table><thead><tr><th>INSTITUTION ID</th><th>INSTITUTION NAME</th><th>TYPE</th><th>LOCATION</th><th>OPEN CASES</th><th>RECORD STATUS</th></tr></thead><tbody id="institutions-table"></tbody></table></div></div>
+    </section>
+
+    <section class="page" id="page-routing">
+      <div class="page-heading"><div><div class="eyebrow">CONFIGURATION & HUMAN REVIEW</div><h1>Routing & AI review</h1><p class="muted">Manage configurable rules and inspect low-confidence classification suggestions.</p></div><div class="heading-actions"><button class="btn btn-outline" id="add-rule">＋ Add rule</button></div></div>
+      <div class="notice warning-notice"><span class="notice-icon">!</span><div><strong>Official mapping required</strong><p>These are illustrative categories and placeholder destinations, not an authoritative AICTE organizational directory. Verify every destination before deployment.</p></div></div>
+      <div class="routing-cards"><article class="panel"><div class="panel-head"><div><h2>Routing rules</h2><p class="muted">Rule-based routing takes precedence over AI suggestions.</p></div><span class="status-pill status-green">Configurable</span></div><div class="table-scroll"><table><thead><tr><th>CATEGORY</th><th>DEMO DESTINATION</th><th>CONFIDENCE / CONDITION</th><th>STATUS</th></tr></thead><tbody id="rules-table"></tbody></table></div></article>
+      <article class="panel"><div class="panel-head"><div><h2>Manual review queue</h2><p class="muted">Cases requiring a human decision</p></div><span class="status-pill status-amber">3 pending</span></div><div id="review-queue" class="review-queue"></div></article></div>
+      <article class="panel ai-panel"><div class="ai-orb">✦</div><div><h2>AI classification status</h2><p class="muted">Prototype simulation only. A real model requires reviewed, representative training data and evaluation before use.</p><div class="ai-metrics"><span><strong>TF-IDF + classifier</strong><small>Suggested baseline model</small></span><span><strong>Confidence threshold</strong><small>Example: 0.70, configurable</small></span><span><strong>Human-in-the-loop</strong><small>Required for uncertain cases</small></span></div></div></article>
+    </section>
+
+    <section class="page" id="page-analytics">
+      <div class="page-heading"><div><div class="eyebrow">PERFORMANCE</div><h1>Reports & analytics</h1><p class="muted">Monitor resolution performance, workload and case trends.</p></div><div class="heading-actions"><button class="btn btn-primary" id="export-report">⇩ Download report CSV</button></div></div>
+      <div class="stats-grid"><article class="stat-card"><div class="stat-top"><span>Resolution rate</span><span class="stat-icon green">✓</span></div><strong>55.6%</strong><div class="stat-foot">138 of 248 cases</div></article><article class="stat-card"><div class="stat-top"><span>Average resolution</span><span class="stat-icon blue">◷</span></div><strong>8.4 <small>days</small></strong><div class="stat-foot">Illustrative measure</div></article><article class="stat-card"><div class="stat-top"><span>Overdue cases</span><span class="stat-icon amber">!</span></div><strong>9</strong><div class="stat-foot">Require attention</div></article><article class="stat-card"><div class="stat-top"><span>Reassignment rate</span><span class="stat-icon purple">↗</span></div><strong>7.2%</strong><div class="stat-foot">Illustrative measure</div></article></div>
+      <div class="dashboard-grid"><article class="panel chart-panel"><div class="panel-head"><div><h2>Monthly case outcomes</h2><p class="muted">Illustrative sample data</p></div></div><div class="chart-wrap"><canvas id="outcomeChart"></canvas></div></article><article class="panel"><div class="panel-head"><div><h2>Suggested report set</h2><p class="muted">Common operational views</p></div></div><div class="report-list"><button data-report="Backlog by status"><span class="report-icon">▤</span><span><strong>Backlog by status</strong><small>New, pending, in progress and overdue</small></span><span>→</span></button><button data-report="Resolution time"><span class="report-icon">◷</span><span><strong>Resolution time</strong><small>Average and median case duration</small></span><span>→</span></button><button data-report="Routing effectiveness"><span class="report-icon">⌘</span><span><strong>Routing effectiveness</strong><small>Reassignment and manual-review rates</small></span><span>→</span></button><button data-report="Institution trends"><span class="report-icon">⌂</span><span><strong>Institution trends</strong><small>Case volume by institution</small></span><span>→</span></button></div></article></div>
+    </section>
+
+    <section class="page" id="page-notifications">
+      <div class="page-heading"><div><div class="eyebrow">UPDATES</div><h1>Notifications</h1><p class="muted">Assignment updates, approaching deadlines and review reminders.</p></div><div class="heading-actions"><button class="btn btn-outline" id="mark-read">Mark all as read</button></div></div>
+      <div class="panel notification-list" id="notification-list"></div>
+    </section>
+
+    <section class="page" id="page-users">
+      <div class="page-heading"><div><div class="eyebrow">ACCESS MANAGEMENT</div><h1>Users & roles</h1><p class="muted">Illustrative role-based access control model.</p></div><div class="heading-actions"><button class="btn btn-primary" id="add-user">＋ Add user</button></div></div>
+      <div class="notice"><span class="notice-icon">i</span><div><strong>Least-privilege access</strong><p>Production roles should be approved by the system owner. Restrict access to complaint contents and attachments based on responsibilities.</p></div></div>
+      <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>USER</th><th>EMAIL</th><th>ROLE</th><th>ACCESS SCOPE</th><th>STATUS</th></tr></thead><tbody id="users-table"></tbody></table></div></div>
+    </section>
+
+    <section class="page" id="page-audit">
+      <div class="page-heading"><div><div class="eyebrow">ACCOUNTABILITY</div><h1>Audit logs</h1><p class="muted">A prototype view of traceable system actions.</p></div><div class="heading-actions"><button class="btn btn-outline" id="export-audit">⇩ Export logs</button></div></div>
+      <div class="panel table-panel"><div class="table-scroll"><table><thead><tr><th>TIMESTAMP</th><th>ACTOR</th><th>ACTION</th><th>RECORD</th><th>DETAILS</th></tr></thead><tbody id="audit-table"></tbody></table></div></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><div class="eyebrow">DEMO WORKFLOW</div><h2 id="modal-title">Confirm action</h2></div><button class="icon-btn" id="modal-close" aria-label="Close">×</button></div><div id="modal-content"></div><div class="modal-actions" id="modal-actions"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
